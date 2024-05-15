@@ -1,17 +1,22 @@
 package com.example.online_shop.data.repository
 
 import android.media.Image
+import com.example.online_shop.data.dataStore.TokenManager
 import com.example.online_shop.data.remote.CategoryDTO
 import com.example.online_shop.data.remote.OnlineShopApi
+import com.example.online_shop.data.remote.requests.AuthRequest
+import com.example.online_shop.data.remote.responses.AuthResponse
 import com.example.online_shop.data.remote.toCategory
 import com.example.online_shop.domain.models.Brand
 import com.example.online_shop.domain.models.Category
 import com.example.online_shop.domain.models.Item
 import com.example.online_shop.domain.repository.OnlineShopRepository
+import com.example.online_shop.utils.apiRequestFlow
 import javax.inject.Inject
 
 class OnlineShopRepositoryImpl @Inject constructor(
-    private val api: OnlineShopApi
+    private val api: OnlineShopApi,
+    private val tokenManager: TokenManager
 ) : OnlineShopRepository {
     override fun getItems(): List<Item> {
         TODO("Not yet implemented")
@@ -80,5 +85,14 @@ class OnlineShopRepositoryImpl @Inject constructor(
 
     override fun deleteImageById(id: String) {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun login(auth: AuthRequest): AuthResponse {
+        val response = api.signIn(auth)
+        tokenManager.saveToken(response.body()?.token ?: "")
+        return AuthResponse(
+            token = response.body()?.token ?: "",
+            role = response.body()?.role ?: "user"
+        )
     }
 }

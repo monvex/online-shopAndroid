@@ -1,9 +1,13 @@
 package com.example.online_shop.data.remote
 
 import android.media.Image
+import com.example.online_shop.data.remote.requests.AuthRequest
+import com.example.online_shop.data.remote.responses.AuthResponse
 import com.example.online_shop.domain.models.Brand
 import com.example.online_shop.domain.models.Category
 import com.example.online_shop.domain.models.Item
+import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -33,5 +37,7 @@ interface OnlineShopApi {
     fun addNewImage(image: Image)
     fun deleteImageById(id: String)
     @POST("/signin")
-    suspend fun authUser()
+    suspend fun signIn(
+        @Body auth: AuthRequest
+    ): Response<AuthResponse>
 }

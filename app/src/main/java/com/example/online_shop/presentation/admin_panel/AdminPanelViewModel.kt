@@ -2,6 +2,8 @@ package com.example.online_shop.presentation.admin_panel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.online_shop.data.remote.requests.AuthRequest
+import com.example.online_shop.data.remote.responses.AuthResponse
 import com.example.online_shop.domain.models.Category
 import com.example.online_shop.domain.repository.OnlineShopRepository
 
@@ -14,7 +16,6 @@ class AdminPanelViewModel @Inject constructor(
     private val repository: OnlineShopRepository
 ): ViewModel() {
 
-    suspend fun getCategories() {
-        repository.getCategories()
-    }
+
+
 }

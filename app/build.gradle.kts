@@ -62,7 +62,11 @@ android {
 }
 
 dependencies {
-
+    //DataStore
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+    //OkHttp
+    implementation ("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.10.0")
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
     implementation(platform("androidx.compose:compose-bom:2024.05.00"))

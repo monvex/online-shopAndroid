@@ -1,9 +1,14 @@
 package com.example.online_shop.domain.repository
 
 import android.media.Image
+import com.example.online_shop.data.remote.requests.AuthRequest
+import com.example.online_shop.data.remote.responses.AuthResponse
 import com.example.online_shop.domain.models.Brand
 import com.example.online_shop.domain.models.Category
 import com.example.online_shop.domain.models.Item
+import com.example.online_shop.utils.ApiResponse
+import com.example.online_shop.utils.apiRequestFlow
+import kotlinx.coroutines.flow.Flow
 
 interface OnlineShopRepository {
     fun getItems(): List<Item>
@@ -27,5 +32,7 @@ interface OnlineShopRepository {
     fun getImageByItemId(id: Int)
     fun addNewImage(image: Image)
     fun deleteImageById(id: String)
+
+    suspend fun login(auth: AuthRequest): AuthResponse
 
 }
