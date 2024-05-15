@@ -14,12 +14,6 @@ class AdminPanelViewModel @Inject constructor(
     private val repository: OnlineShopRepository
 ): ViewModel() {
 
-    init {
-
-        runBlocking {
-            val aboba = getCategories()
-        }
-    }
     suspend fun getCategories() {
         repository.getCategories()
     }

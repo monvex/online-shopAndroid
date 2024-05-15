@@ -55,7 +55,7 @@ class OnlineShopRepositoryImpl @Inject constructor(
 
     override suspend fun getCategories(): List<Category> {
 
-        return api.getCategories("[{\"key\":\"Authorization\",\"value\":\"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwOi8vMC4wLjAuMDo4MDgwL2hlbGxvIiwiaXNzIjoiaHR0cDovLzAuMC4wLjA6ODA4MC8iLCJleHAiOjE3NDM0MDYxMzMsInVzZXJJZCI6IjYiLCJyb2xlIjoiYWRtaW4ifQ.4AS1e-Vlogi-H_RbbkbPEJy52SLAqAGrp-Ot28UtxGo\",\"description\":\"\",\"type\":\"text\",\"enabled\":true}]").map { categoryDTO -> categoryDTO.toCategory()  }
+        return api.getCategories("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwOi8vMC4wLjAuMDo4MDgwL2hlbGxvIiwiaXNzIjoiaHR0cDovLzAuMC4wLjA6ODA4MC8iLCJleHAiOjE3NDczMzYzODUsInVzZXJJZCI6IjUiLCJyb2xlIjoidXNlciJ9.HPZUGXbRWWr9V53E3eOMt-j5agQPj9q9Q0mXV_vtj44").map { categoryDTO -> categoryDTO.toCategory()  }
     }
 
     override fun deleteCategoryById(id: Int) {

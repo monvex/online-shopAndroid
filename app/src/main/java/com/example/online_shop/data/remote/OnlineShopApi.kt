@@ -6,6 +6,7 @@ import com.example.online_shop.domain.models.Category
 import com.example.online_shop.domain.models.Item
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 
 interface OnlineShopApi {
     fun getItems(): List<Item>
@@ -31,4 +32,6 @@ interface OnlineShopApi {
     fun getImageByItemId(id: Int)
     fun addNewImage(image: Image)
     fun deleteImageById(id: String)
+    @POST("/signin")
+    suspend fun authUser()
 }
