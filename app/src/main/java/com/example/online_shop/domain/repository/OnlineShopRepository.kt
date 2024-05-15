@@ -19,7 +19,7 @@ interface OnlineShopRepository {
     fun addNewBrand(brand: Brand)
 
 
-    fun getCategories(): List<Category>
+    suspend fun getCategories(): List<Category>
     fun deleteCategoryById(id: Int)
     fun updateCategoryById(id: Int, newBrand: Category)
     fun addNewCategory(brand: Category)

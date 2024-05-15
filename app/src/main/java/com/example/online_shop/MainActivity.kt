@@ -19,7 +19,9 @@ import com.example.online_shop.presentation.admin_panel.AdminPanelScreen
 import com.example.online_shop.presentation.admin_panel.screens.CategoriesAdminScreen
 import com.example.online_shop.presentation.components.AppBar
 import com.example.online_shop.ui.theme.OnlineshopTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +53,6 @@ class MainActivity : ComponentActivity() {
                             }
                             composable("adminCategories") {
                                 CategoriesAdminScreen(
-
                                 )
                             }
                         }

@@ -21,7 +21,7 @@ interface OnlineShopApi {
     fun addNewBrand(brand: Brand)
 
     @GET("/categories")
-    fun getCategories(
+    suspend fun getCategories(
         @Header("Authorization") token: String
     ): List<CategoryDTO>
     fun deleteCategoryById(id: Int)
