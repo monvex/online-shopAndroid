@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 fun AdminPanelScreen(
     onNavigateToCategories: () -> Unit,
     onNavigateToBrands: () -> Unit,
+    onNavigateToSignIn: () -> Unit
     onNavigateToItems: () -> Unit,
     onNavigateToUsers: () -> Unit
 ) {
@@ -48,17 +49,23 @@ fun AdminPanelScreen(
                 Text("Товары")
             }
             Button(
+                onClick = onNavigateToSignIn
+            ) {
+                Text("Авторизация")
+            }
+            Button(
                 onClick = onNavigateToUsers
             ) {
                 Text("Пользователи")
             }
         }
     }
+
 }
 
 
 @Preview(showBackground = true)
 @Composable
 fun AdminPanelScreenPreview() {
-    AdminPanelScreen(onNavigateToCategories = { /*TODO*/ } , onNavigateToBrands = { /*TODO*/ }, onNavigateToItems = { }, onNavigateToUsers = { })
+    AdminPanelScreen(onNavigateToCategories = { /*TODO*/ } , onNavigateToBrands = { /*TODO*/ }, onNavigateToItems = { })
 }

@@ -48,6 +48,7 @@ private fun getTitleForRoute(route: String): String {
         "adminCategories" -> "Категории"
         "adminBrands" -> "Брэнды"
         "adminItems" -> "Товары"
+        "signIn" -> "Авторизация"
         else -> ""
     }
 }
