@@ -1,7 +1,6 @@
 package com.example.online_shop.presentation.admin_panel.screens
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,9 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -25,16 +24,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import com.example.online_shop.domain.models.Category
+import com.example.online_shop.domain.models.Brand
 import com.example.online_shop.presentation.admin_panel.AdminPanelViewModel
 
 @Composable
-fun CategoriesAdminScreen(
-    onNavigateToCategoryAdding: () -> Unit,
+fun ItemsAdminScreen(
     viewModel: AdminPanelViewModel = hiltViewModel()
 ) {
-    val categories by viewModel.categories.collectAsState()
+    val brands by viewModel.brands.collectAsState()
     Box( modifier = Modifier
         .fillMaxSize()
         .padding(0.dp, 60.dp, 0.dp, 0.dp)
@@ -44,12 +41,12 @@ fun CategoriesAdminScreen(
                 .padding(5.dp)
                 .fillMaxSize()
         ) {
-            items(categories) { category ->
-                CategoryCard(category, viewModel)
+            items(brands) { brand ->
+                BrandCard(brand, viewModel)
             }
         }
         Row( modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.Bottom ){
-            Button(onClick = onNavigateToCategoryAdding,
+            Button(onClick = {  },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
@@ -63,13 +60,13 @@ fun CategoriesAdminScreen(
 }
 
 @Composable
-fun CategoryCard(category: Category, viewModel: AdminPanelViewModel){
+fun ItemCard(brand: Brand, viewModel: AdminPanelViewModel){
     Row( modifier = Modifier
         .fillMaxWidth()
         .padding(20.dp)
     ){
         Column( modifier = Modifier.fillMaxWidth(0.5f) ){
-            Text(text = category.categoryTitle, fontSize = 20.sp)
+            Text(text = brand.brandTitle, fontSize = 20.sp)
         }
         Column(){
             Button(onClick = {  },
@@ -83,7 +80,7 @@ fun CategoryCard(category: Category, viewModel: AdminPanelViewModel){
             }
         }
         Column( modifier = Modifier.padding(5.dp, 0.dp, 0.dp, 0.dp)){
-            Button(onClick = { viewModel.deleteCategory(category.categoryTitle) },
+            Button(onClick = { viewModel.deleteBrand(brand.brandTitle) },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
@@ -102,6 +99,6 @@ fun CategoryCard(category: Category, viewModel: AdminPanelViewModel){
 
 @Preview(showBackground = true)
 @Composable
-fun CategoriesAdminScreenPreview() {
-    CategoriesAdminScreen({})
+fun ItemsAdminScreenPreview() {
+    CategoriesAdminScreen( {} )
 }

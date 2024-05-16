@@ -11,27 +11,42 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.DELETE
+import retrofit2.http.Path
 
 interface OnlineShopApi {
-    fun getItems(): List<Item>
+
+    @GET("/items")
+    suspend fun getItems(@Header("Authorization") token: String): List<ItemDTO>
     fun getPaginatedItems(page: Int, size: Int): List<Item>
     fun getItemById(id: Int): Item
     fun deleteItemById(id: Int)
     fun addNewItem(item: Item)
     fun updateItemById(id: Int, newItem: Item)
 
-    fun getBrands(): List<Brand>
-    fun deleteBrandById(id: Int)
+    @GET("/brands")
+    suspend fun getBrands(
+        @Header("Authorization") token: String
+    ): List<BrandDTO>
+
+    @DELETE("/brands/{title}")
+    suspend fun deleteBrandByTitle(@Path("title") title: String, @Header("Authorization") token: String)
     fun updateBrandById(id: Int, newBrand: Brand)
-    fun addNewBrand(brand: Brand)
+
+    @POST("/brands/add")
+    suspend fun addNewBrand(@Body brand: BrandDTO, @Header("Authorization") token: String)
 
     @GET("/categories")
     suspend fun getCategories(
         @Header("Authorization") token: String
     ): List<CategoryDTO>
-    fun deleteCategoryById(id: Int)
+
+    @DELETE("/categories/{title}")
+    suspend fun deleteCategoryByTitle(@Path("title") title: String, @Header("Authorization") token: String)
     fun updateCategoryById(id: Int, newBrand: Category)
-    fun addNewCategory(brand: Category)
+
+    @POST("/categories/add")
+    suspend fun addNewCategory(@Body brand: CategoryDTO, @Header("Authorization") token: String)
 
     fun getImageByItemId(id: Int)
     fun addNewImage(image: Image)

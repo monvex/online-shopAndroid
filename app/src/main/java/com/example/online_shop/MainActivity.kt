@@ -16,7 +16,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.online_shop.presentation.admin_panel.AdminPanelScreen
+import com.example.online_shop.presentation.admin_panel.screens.BrandAddingScreen
+import com.example.online_shop.presentation.admin_panel.screens.BrandsAdminScreen
 import com.example.online_shop.presentation.admin_panel.screens.CategoriesAdminScreen
+import com.example.online_shop.presentation.admin_panel.screens.CategoryAddingScreen
 import com.example.online_shop.presentation.components.AppBar
 import com.example.online_shop.ui.theme.OnlineshopTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,35 +51,41 @@ class MainActivity : ComponentActivity() {
                                 AdminPanelScreen(
                                     onNavigateToCategories = { navController.navigate("adminCategories") } ,
                                     onNavigateToBrands = { navController.navigate("adminBrands") },
-                                    onNavigateToItems = { navController.navigate("adminItems")}
+                                    onNavigateToItems = { navController.navigate("adminItems")},
+                                    onNavigateToUsers = { navController.navigate("adminUsers")}
                                 )
                             }
                             composable("adminCategories") {
-                                CategoriesAdminScreen(
-                                )
+                                CategoriesAdminScreen( { navController.navigate("categoryAdding") } )
+                            }
+                            composable("categoryAdding"){
+                                CategoryAddingScreen( { navController.navigate("adminCategories"){
+                                    launchSingleTop = true
+                                    popUpTo("adminCategories") { inclusive = true }
+                                    }
+                                } )
+                            }
+                            composable("adminBrands") {
+                                BrandsAdminScreen( { navController.navigate("brandAdding") } )
+                            }
+                            composable("brandAdding") {
+                                BrandAddingScreen({ navController.navigate("adminBrands"){
+                                    launchSingleTop = true
+                                    popUpTo("adminBrands") { inclusive = true }
+                                }
+                                })
+                            }
+                            composable("adminItems") {
+                                //CategoriesAdminScreen()
+                            }
+                            composable("adminUsers") {
+                                //CategoriesAdminScreen()
                             }
                         }
 
                     }
                 }
             }
-        }
-    }
-}
-
-fun NavGraphBuilder.adminPanelNavigation(navController: NavController) {
-    navigation(startDestination = "adminMain", route= "adminMainStart") {
-        composable("adminMain") {
-            AdminPanelScreen(
-                onNavigateToCategories = { navController.navigate("adminCategories") } ,
-                onNavigateToBrands = { navController.navigate("adminBrands") },
-                onNavigateToItems = { navController.navigate("adminItems")}
-            )
-        }
-        composable("adminCategories") {
-            CategoriesAdminScreen(
-
-            )
         }
     }
 }

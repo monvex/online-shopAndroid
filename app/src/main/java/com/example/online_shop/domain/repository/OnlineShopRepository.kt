@@ -11,23 +11,23 @@ import com.example.online_shop.utils.apiRequestFlow
 import kotlinx.coroutines.flow.Flow
 
 interface OnlineShopRepository {
-    fun getItems(): List<Item>
+    suspend fun getItems(): List<Item>
     fun getPaginatedItems(page: Int, size: Int): List<Item>
     fun getItemById(id: Int): Item
     fun deleteItemById(id: Int)
     fun addNewItem(item: Item)
     fun updateItemById(id: Int, newItem: Item)
 
-    fun getBrands(): List<Brand>
-    fun deleteBrandById(id: Int)
+    suspend fun getBrands(): List<Brand>
+    suspend fun deleteBrandByTitle(title: String)
     fun updateBrandById(id: Int, newBrand: Brand)
-    fun addNewBrand(brand: Brand)
+    suspend fun addNewBrand(brand: Brand)
 
 
     suspend fun getCategories(): List<Category>
-    fun deleteCategoryById(id: Int)
+    suspend fun deleteCategoryByTitle(title: String)
     fun updateCategoryById(id: Int, newBrand: Category)
-    fun addNewCategory(brand: Category)
+    suspend fun addNewCategory(category: Category)
 
     fun getImageByItemId(id: Int)
     fun addNewImage(image: Image)
