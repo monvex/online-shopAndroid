@@ -76,6 +76,7 @@ dependencies {
     implementation("androidx.compose.material3:material3-android:1.2.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.test.ext:junit-ktx:1.1.5")
+    implementation("androidx.datastore:datastore-core-android:1.1.1")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")

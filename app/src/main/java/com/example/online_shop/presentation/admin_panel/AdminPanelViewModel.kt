@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.online_shop.domain.models.Brand
 import com.example.online_shop.domain.models.Category
+import com.example.online_shop.domain.models.Item
 import com.example.online_shop.domain.repository.OnlineShopRepository
 
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,6 +25,9 @@ class AdminPanelViewModel @Inject constructor(
 
     private val _brands = MutableStateFlow<List<Brand>>(emptyList())
     val brands: StateFlow<List<Brand>> = _brands
+
+    private val _items = MutableStateFlow<List<Item>>(emptyList())
+    val items: StateFlow<List<Item>> = _items
 
     init {
         viewModelScope.launch {
@@ -67,5 +71,9 @@ class AdminPanelViewModel @Inject constructor(
             repository.addNewBrand(Brand(title))
             getBrands()
         }
+    }
+
+    suspend fun getItems() {
+        _items.value = repository.getItems()
     }
 }
