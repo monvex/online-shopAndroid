@@ -12,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
@@ -51,26 +52,74 @@ class MainActivity : ComponentActivity() {
                     ) {
                         NavHost(
                             navController = navController ,
-                            startDestination = "adminMain"
+                            startDestination = "onBoarding"
                         ) {
 //                            adminPanelNavigation(navController)
+                            composable("onBoarding") {
+                                val viewModel: AuthScreenViewModel = hiltViewModel()
+                                if (viewModel.token == null) {
+                                    navController.navigate("signIn")
+                                } else {
+                                    navController.navigate("adminMain")
+                                }
+                            }
                             composable("adminMain") {
+                                val viewModel: AuthScreenViewModel = hiltViewModel()
+                                val localContext = LocalContext.current
                                 AdminPanelScreen(
+                                    onShowStuffClick = {
+                                        Toast.makeText(
+                                            localContext,
+                                            viewModel.token,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    },
                                     onNavigateToCategories = { navController.navigate("adminCategories") } ,
                                     onNavigateToBrands = { navController.navigate("adminBrands") },
                                     onNavigateToItems = { navController.navigate("adminItems")},
-                                    onNavigateToUsers = { navController.navigate("adminUsers")},
                                     onNavigateToSignIn = { navController.navigate("signIn")}
                                 )
                             }
                             composable("adminCategories") {
-                                CategoriesAdminScreen( { navController.navigate("categoryAdding") } )
+                                CategoriesAdminScreen(onNavigateToCategoryAdding = {}
+                                )
+                            }
+                            composable("signIn") {
+                                val viewModel: AuthScreenViewModel = hiltViewModel()
+                                val localContext = LocalContext.current
+                                AuthScreen(
+                                    onSignInClick = {
+                                        runBlocking {
+                                            try {
+                                                val response = viewModel.signIn(AuthRequest(viewModel.uiState.value.login, viewModel.uiState.value.password))
+                                                if (response.token != "") {
+                                                    Toast.makeText(
+                                                        localContext,
+                                                        response.token,
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                    navController.navigate("adminMain")
+                                                } else {
+                                                    Toast.makeText(
+                                                        localContext,
+                                                        "Анлак Бро",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
+
+                                            } catch (e: Exception){
+
+                                            }
+
+                                        }
+                                    }
+                                )
                             }
                             composable("categoryAdding"){
                                 CategoryAddingScreen( { navController.navigate("adminCategories"){
                                     launchSingleTop = true
                                     popUpTo("adminCategories") { inclusive = true }
-                                    }
+                                }
                                 } )
                             }
                             composable("adminBrands") {
@@ -89,31 +138,6 @@ class MainActivity : ComponentActivity() {
                             composable("adminUsers") {
                                 //CategoriesAdminScreen()
                             }
-                            composable("signIn") {
-                                val viewModel: AuthScreenViewModel = hiltViewModel()
-                                val localContext = LocalContext.current
-                                AuthScreen(
-                                    onSignInClick = {
-                                        runBlocking {
-                                            try {
-                                                val response = viewModel.signIn(AuthRequest(viewModel.uiState.value.login, viewModel.uiState.value.password))
-                                                Toast.makeText(
-                                                    localContext,
-                                                    response.token,
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            } catch (e: Exception){
-                                                Toast.makeText(
-                                                    localContext,
-                                                    "Анлак Бро",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
-
-                                        }
-                                    }
-                                )
-                            }
                         }
 
                     }
@@ -122,3 +146,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+

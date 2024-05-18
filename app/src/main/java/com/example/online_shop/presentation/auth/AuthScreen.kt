@@ -42,12 +42,14 @@ fun AuthScreen(
             Text("Введите логин")
             OutlinedTextField(
                 value = uiState.login ,
-                onValueChange = { viewModel.onLoginChange(it) }
+                onValueChange = { viewModel.onLoginChange(it) },
+                singleLine = true
             )
             Text("Введите пароль")
             OutlinedTextField(
                 value = uiState.password ,
-                onValueChange = { viewModel.onPasswordChange(it) }
+                onValueChange = { viewModel.onPasswordChange(it) },
+                singleLine = true
             )
             Button(onClick = onSignInClick) {
                 Text(text = "Войти")

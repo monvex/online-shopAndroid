@@ -11,27 +11,27 @@ import com.example.online_shop.utils.apiRequestFlow
 import kotlinx.coroutines.flow.Flow
 
 interface OnlineShopRepository {
-    suspend fun getItems(): List<Item>
-    fun getPaginatedItems(page: Int, size: Int): List<Item>
-    fun getItemById(id: Int): Item
-    fun deleteItemById(id: Int)
-    fun addNewItem(item: Item)
-    fun updateItemById(id: Int, newItem: Item)
+    suspend fun getItems(token: String): List<Item>
+    fun getPaginatedItems(page: Int, size: Int, token: String): List<Item>
+    fun getItemById(id: Int, token: String): Item
+    fun deleteItemById(id: Int, token: String)
+    fun addNewItem(item: Item, token: String)
+    fun updateItemById(id: Int, newItem: Item, token: String)
 
-    suspend fun getBrands(): List<Brand>
-    suspend fun deleteBrandByTitle(title: String)
-    fun updateBrandById(id: Int, newBrand: Brand)
-    suspend fun addNewBrand(brand: Brand)
+    suspend fun getBrands(token: String): List<Brand>
+    suspend fun deleteBrandByTitle(title: String, token: String)
+    fun updateBrandById(id: Int, newBrand: Brand, token: String)
+    suspend fun addNewBrand(brand: Brand, token: String)
 
 
-    suspend fun getCategories(): List<Category>
-    suspend fun deleteCategoryByTitle(title: String)
-    fun updateCategoryById(id: Int, newBrand: Category)
-    suspend fun addNewCategory(category: Category)
+    suspend fun getCategories(token: String): List<Category>
+    suspend fun deleteCategoryByTitle(title: String, token: String)
+    fun updateCategoryById(id: Int, newBrand: Category, token: String)
+    suspend fun addNewCategory(category: Category, token: String)
 
-    fun getImageByItemId(id: Int)
-    fun addNewImage(image: Image)
-    fun deleteImageById(id: String)
+    fun getImageByItemId(id: Int, token: String)
+    fun addNewImage(image: Image, token: String)
+    fun deleteImageById(id: String, token: String)
 
     suspend fun login(auth: AuthRequest): AuthResponse
 

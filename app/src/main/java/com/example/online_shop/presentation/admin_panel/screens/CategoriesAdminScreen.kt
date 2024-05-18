@@ -47,6 +47,7 @@ fun CategoriesAdminScreen(
             items(categories) { category ->
                 CategoryCard(category, viewModel)
             }
+
         }
         Row( modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.Bottom ){
             Button(onClick = onNavigateToCategoryAdding,
