@@ -6,6 +6,7 @@ import com.example.online_shop.data.remote.responses.AuthResponse
 import com.example.online_shop.domain.models.Brand
 import com.example.online_shop.domain.models.Category
 import com.example.online_shop.domain.models.Item
+import com.example.online_shop.domain.models.UserToDB
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -20,9 +21,20 @@ interface OnlineShopApi {
     suspend fun getItems(@Header("Authorization") token: String): List<ItemDTO>
     fun getPaginatedItems(page: Int, size: Int): List<Item>
     fun getItemById(id: Int): Item
-    fun deleteItemById(id: Int)
+
+    @DELETE("items/{id}")
+    suspend fun deleteItemById(@Path("id") id : Int, @Header("Authorization") token: String)
     fun addNewItem(item: Item)
     fun updateItemById(id: Int, newItem: Item)
+
+    @GET("/users")
+    suspend fun getUsers(@Header("Authorization") token: String): List<UserDTO>
+
+    @DELETE("users/{id}")
+    suspend fun deleteUserById(@Path("id") id : Int, @Header("Authorization") token: String)
+
+    @POST("/signup")
+    suspend fun addNewUser(@Body user: UserToDB, @Header("Authorization") token: String)
 
     @GET("/brands")
     suspend fun getBrands(

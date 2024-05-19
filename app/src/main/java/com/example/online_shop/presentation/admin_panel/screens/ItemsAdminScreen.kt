@@ -25,13 +25,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.online_shop.domain.models.Brand
+import com.example.online_shop.domain.models.Item
 import com.example.online_shop.presentation.admin_panel.AdminPanelViewModel
 
 @Composable
 fun ItemsAdminScreen(
+    onNavigateToItemAdding: () -> Unit,
     viewModel: AdminPanelViewModel = hiltViewModel()
 ) {
-    val brands by viewModel.brands.collectAsState()
+    val items by viewModel.items.collectAsState()
     Box( modifier = Modifier
         .fillMaxSize()
         .padding(0.dp, 60.dp, 0.dp, 0.dp)
@@ -41,12 +43,12 @@ fun ItemsAdminScreen(
                 .padding(5.dp)
                 .fillMaxSize()
         ) {
-            items(brands) { brand ->
-                BrandCard(brand, viewModel)
+            items(items) { item ->
+                ItemCard(item, viewModel)
             }
         }
         Row( modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.Bottom ){
-            Button(onClick = {  },
+            Button(onClick = onNavigateToItemAdding,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
@@ -60,13 +62,19 @@ fun ItemsAdminScreen(
 }
 
 @Composable
-fun ItemCard(brand: Brand, viewModel: AdminPanelViewModel){
+fun ItemCard(item: Item, viewModel: AdminPanelViewModel){
     Row( modifier = Modifier
         .fillMaxWidth()
         .padding(20.dp)
     ){
-        Column( modifier = Modifier.fillMaxWidth(0.5f) ){
-            Text(text = brand.brandTitle, fontSize = 20.sp)
+        Column( modifier = Modifier.fillMaxWidth(0.25f) ){
+            Text(text = item.itemTitle, fontSize = 20.sp)
+        }
+        Column(){
+            Text(text = item.brand, fontSize = 20.sp)
+        }
+        Column(){
+            Text(text = item.category, fontSize = 20.sp)
         }
         Column(){
             Button(onClick = {  },
@@ -80,7 +88,7 @@ fun ItemCard(brand: Brand, viewModel: AdminPanelViewModel){
             }
         }
         Column( modifier = Modifier.padding(5.dp, 0.dp, 0.dp, 0.dp)){
-            Button(onClick = { viewModel.deleteBrand(brand.brandTitle) },
+            Button(onClick = { viewModel.deleteItem(item.id) },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
@@ -95,10 +103,4 @@ fun ItemCard(brand: Brand, viewModel: AdminPanelViewModel){
         modifier = Modifier.fillMaxWidth(0.95f),
         color = Color.LightGray, thickness = 1.dp
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ItemsAdminScreenPreview() {
-    CategoriesAdminScreen( {} )
 }

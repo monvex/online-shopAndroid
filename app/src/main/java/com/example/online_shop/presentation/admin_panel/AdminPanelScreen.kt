@@ -19,7 +19,8 @@ fun AdminPanelScreen(
     onNavigateToCategories: () -> Unit,
     onNavigateToBrands: () -> Unit,
     onNavigateToItems: () -> Unit,
-    onNavigateToSignIn: () -> Unit
+    onNavigateToSignIn: () -> Unit,
+    onNavigateToUsers: () -> Unit
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -49,6 +50,11 @@ fun AdminPanelScreen(
                 Text("Товары")
             }
             Button(
+                onClick = onNavigateToUsers
+            ) {
+                Text("Пользователи")
+            }
+            Button(
                 onClick = onNavigateToSignIn
             ) {
                 Text("Авторизация")
@@ -67,5 +73,5 @@ fun AdminPanelScreen(
 @Preview(showBackground = true)
 @Composable
 fun AdminPanelScreenPreview() {
-    AdminPanelScreen(onNavigateToCategories = { /*TODO*/ } , onNavigateToBrands = { /*TODO*/ }, onNavigateToItems = { },  onNavigateToSignIn = {},onShowStuffClick = {})
+    AdminPanelScreen(onNavigateToCategories = { /*TODO*/ } , onNavigateToBrands = { /*TODO*/ }, onNavigateToItems = { },  onNavigateToSignIn = {},onShowStuffClick = {}, onNavigateToUsers = {})
 }

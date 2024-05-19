@@ -1,8 +1,6 @@
 package com.example.online_shop.data.repository
 
 import android.media.Image
-import androidx.lifecycle.viewModelScope
-import androidx.test.core.app.ActivityScenario.launch
 import com.example.online_shop.data.dataStore.TokenManager
 import com.example.online_shop.data.remote.CategoryDTO
 import com.example.online_shop.data.remote.ItemDTO
@@ -12,16 +10,16 @@ import com.example.online_shop.data.remote.responses.AuthResponse
 import com.example.online_shop.data.remote.toBrand
 import com.example.online_shop.data.remote.toCategory
 import com.example.online_shop.data.remote.toItem
+import com.example.online_shop.data.remote.toUser
 import com.example.online_shop.domain.models.Brand
 import com.example.online_shop.domain.models.Category
 import com.example.online_shop.domain.models.Item
+import com.example.online_shop.domain.models.User
+import com.example.online_shop.domain.models.UserToDB
 import com.example.online_shop.domain.models.toBrandDTO
 import com.example.online_shop.domain.models.toCategoryDTO
+import com.example.online_shop.domain.models.toUserToDB
 import com.example.online_shop.domain.repository.OnlineShopRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class OnlineShopRepositoryImpl @Inject constructor(
@@ -40,8 +38,8 @@ class OnlineShopRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun deleteItemById(id: Int , token: String) {
-        TODO("Not yet implemented")
+    override suspend fun deleteItemById(id: Int, token: String) {
+        api.deleteItemById(id, token = token)
     }
 
     override fun addNewItem(item: Item , token: String) {
@@ -50,6 +48,18 @@ class OnlineShopRepositoryImpl @Inject constructor(
 
     override fun updateItemById(id: Int , newItem: Item , token: String) {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun getUsers(token: String): List<User> {
+        return api.getUsers(token = token).map { userDTO -> userDTO.toUser() }
+    }
+
+    override suspend fun deleteUserById(id: Int, token: String) {
+        return api.deleteUserById(id, token = token)
+    }
+
+    override suspend fun addNewUser(user: UserToDB, token: String) {
+        return api.addNewUser(user, token = token)
     }
 
     override suspend fun getBrands(token: String): List<Brand> {

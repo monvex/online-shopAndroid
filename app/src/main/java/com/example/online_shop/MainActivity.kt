@@ -25,6 +25,10 @@ import com.example.online_shop.presentation.admin_panel.screens.BrandAddingScree
 import com.example.online_shop.presentation.admin_panel.screens.BrandsAdminScreen
 import com.example.online_shop.presentation.admin_panel.screens.CategoriesAdminScreen
 import com.example.online_shop.presentation.admin_panel.screens.CategoryAddingScreen
+import com.example.online_shop.presentation.admin_panel.screens.ItemAddingScreen
+import com.example.online_shop.presentation.admin_panel.screens.ItemsAdminScreen
+import com.example.online_shop.presentation.admin_panel.screens.UserAddingScreen
+import com.example.online_shop.presentation.admin_panel.screens.UsersAdminScreen
 import com.example.online_shop.presentation.auth.AuthScreen
 import com.example.online_shop.presentation.auth.AuthScreenViewModel
 import com.example.online_shop.presentation.components.AppBar
@@ -77,7 +81,8 @@ class MainActivity : ComponentActivity() {
                                     onNavigateToCategories = { navController.navigate("adminCategories") } ,
                                     onNavigateToBrands = { navController.navigate("adminBrands") },
                                     onNavigateToItems = { navController.navigate("adminItems")},
-                                    onNavigateToSignIn = { navController.navigate("signIn")}
+                                    onNavigateToSignIn = { navController.navigate("signIn")},
+                                    onNavigateToUsers = { navController.navigate("adminUsers")}
                                 )
                             }
                             composable("adminCategories") {
@@ -133,10 +138,16 @@ class MainActivity : ComponentActivity() {
                                 })
                             }
                             composable("adminItems") {
-                                //CategoriesAdminScreen()
+                                ItemsAdminScreen({navController.navigate("itemAdding")})
+                            }
+                            composable("itemAdding"){
+                                ItemAddingScreen()
                             }
                             composable("adminUsers") {
-                                //CategoriesAdminScreen()
+                                UsersAdminScreen( { navController.navigate("userAdding") } )
+                            }
+                            composable("userAdding") {
+                                UserAddingScreen()
                             }
                         }
 

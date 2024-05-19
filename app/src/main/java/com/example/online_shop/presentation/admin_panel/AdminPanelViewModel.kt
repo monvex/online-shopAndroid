@@ -9,6 +9,8 @@ import com.example.online_shop.data.dataStore.TokenManager
 import com.example.online_shop.domain.models.Brand
 import com.example.online_shop.domain.models.Category
 import com.example.online_shop.domain.models.Item
+import com.example.online_shop.domain.models.User
+import com.example.online_shop.domain.models.UserToDB
 import com.example.online_shop.domain.repository.OnlineShopRepository
 
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,6 +40,9 @@ class AdminPanelViewModel @Inject constructor(
     private val _items = MutableStateFlow<List<Item>>(emptyList())
     val items: StateFlow<List<Item>> = _items
 
+    private val _users = MutableStateFlow<List<User>>(emptyList())
+    val users: StateFlow<List<User>> = _users
+
     private val _token: String? = null
     var token = _token
 
@@ -48,6 +53,8 @@ class AdminPanelViewModel @Inject constructor(
         viewModelScope.launch {
             getCategories()
             getBrands()
+            getItems()
+            getUsers()
         }
     }
 
@@ -90,5 +97,30 @@ class AdminPanelViewModel @Inject constructor(
 
     suspend fun getItems() {
         _items.value = repository.getItems(token.toString())
+    }
+
+    fun deleteItem(id: Int){
+        viewModelScope.launch {
+            repository.deleteItemById(id, token.toString())
+            getItems()
+        }
+    }
+
+    suspend fun getUsers() {
+        _users.value = repository.getUsers(token.toString())
+    }
+
+    fun deleteUser(id: Int){
+        viewModelScope.launch {
+            repository.deleteUserById(id, token.toString())
+            getBrands()
+        }
+    }
+
+    fun addNewUser(user: UserToDB){
+        viewModelScope.launch {
+            repository.addNewUser(user, token.toString())
+            getBrands()
+        }
     }
 }

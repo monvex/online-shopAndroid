@@ -38,7 +38,7 @@ object OnlineShopModule {
     @Singleton
     fun provideOnlineShopApi(): OnlineShopApi {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.0.104:8080/")
+            .baseUrl("http://192.168.1.92:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(OnlineShopApi::class.java)
