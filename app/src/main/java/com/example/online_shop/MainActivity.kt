@@ -22,9 +22,11 @@ import androidx.navigation.navigation
 import com.example.online_shop.data.remote.requests.AuthRequest
 import com.example.online_shop.presentation.admin_panel.AdminPanelScreen
 import com.example.online_shop.presentation.admin_panel.screens.BrandAddingScreen
+import com.example.online_shop.presentation.admin_panel.screens.BrandEditScreen
 import com.example.online_shop.presentation.admin_panel.screens.BrandsAdminScreen
 import com.example.online_shop.presentation.admin_panel.screens.CategoriesAdminScreen
 import com.example.online_shop.presentation.admin_panel.screens.CategoryAddingScreen
+import com.example.online_shop.presentation.admin_panel.screens.CategoryEditScreen
 import com.example.online_shop.presentation.admin_panel.screens.ItemAddingScreen
 import com.example.online_shop.presentation.admin_panel.screens.ItemsAdminScreen
 import com.example.online_shop.presentation.admin_panel.screens.UserAddingScreen
@@ -85,10 +87,6 @@ class MainActivity : ComponentActivity() {
                                     onNavigateToUsers = { navController.navigate("adminUsers")}
                                 )
                             }
-                            composable("adminCategories") {
-                                CategoriesAdminScreen(onNavigateToCategoryAdding = {}
-                                )
-                            }
                             composable("signIn") {
                                 val viewModel: AuthScreenViewModel = hiltViewModel()
                                 val localContext = LocalContext.current
@@ -120,22 +118,23 @@ class MainActivity : ComponentActivity() {
                                     }
                                 )
                             }
+                            composable("adminCategories") {
+                                CategoriesAdminScreen( { navController.navigate("categoryAdding") }, navController )
+                            }
                             composable("categoryAdding"){
-                                CategoryAddingScreen( { navController.navigate("adminCategories"){
-                                    launchSingleTop = true
-                                    popUpTo("adminCategories") { inclusive = true }
-                                }
-                                } )
+                                CategoryAddingScreen( { navController.navigate("adminCategories") } )
+                            }
+                            composable("categoryEdit/{categoryTitle}"){
+                                CategoryEditScreen(categoryTitle = it.arguments?.getString("categoryTitle") ?: "")
                             }
                             composable("adminBrands") {
-                                BrandsAdminScreen( { navController.navigate("brandAdding") } )
+                                BrandsAdminScreen( { navController.navigate("brandAdding") }, navController )
                             }
                             composable("brandAdding") {
-                                BrandAddingScreen({ navController.navigate("adminBrands"){
-                                    launchSingleTop = true
-                                    popUpTo("adminBrands") { inclusive = true }
-                                }
-                                })
+                                BrandAddingScreen( { navController.navigate("adminBrands") } )
+                            }
+                            composable("brandEdit/{brandTitle}"){
+                                BrandEditScreen(brandTitle = it.arguments?.getString("brandTitle") ?: "")
                             }
                             composable("adminItems") {
                                 ItemsAdminScreen({navController.navigate("itemAdding")})
@@ -150,7 +149,6 @@ class MainActivity : ComponentActivity() {
                                 UserAddingScreen()
                             }
                         }
-
                     }
                 }
             }

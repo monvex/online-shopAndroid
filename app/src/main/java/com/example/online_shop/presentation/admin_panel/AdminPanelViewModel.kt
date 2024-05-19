@@ -77,6 +77,13 @@ class AdminPanelViewModel @Inject constructor(
         }
     }
 
+    fun updateCategory(categoryTitle: String, newTitle: String){
+        viewModelScope.launch {
+            repository.updateCategory(categoryTitle, Category(newTitle), token.toString())
+            getCategories()
+        }
+    }
+
     suspend fun getBrands() {
         _brands.value = repository.getBrands(token.toString())
     }
@@ -84,6 +91,13 @@ class AdminPanelViewModel @Inject constructor(
     fun deleteBrand(title: String){
         viewModelScope.launch {
             repository.deleteBrandByTitle(title, token.toString())
+            getBrands()
+        }
+    }
+
+    fun updateBrand(brandTitle: String, newTitle: String){
+        viewModelScope.launch {
+            repository.updateBrand(brandTitle, Brand(newTitle), token.toString())
             getBrands()
         }
     }
@@ -113,14 +127,14 @@ class AdminPanelViewModel @Inject constructor(
     fun deleteUser(id: Int){
         viewModelScope.launch {
             repository.deleteUserById(id, token.toString())
-            getBrands()
+            getUsers()
         }
     }
 
     fun addNewUser(user: UserToDB){
         viewModelScope.launch {
             repository.addNewUser(user, token.toString())
-            getBrands()
+            getUsers()
         }
     }
 }

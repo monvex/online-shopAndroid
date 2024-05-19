@@ -13,6 +13,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.DELETE
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface OnlineShopApi {
@@ -43,7 +44,9 @@ interface OnlineShopApi {
 
     @DELETE("/brands/{title}")
     suspend fun deleteBrandByTitle(@Path("title") title: String, @Header("Authorization") token: String)
-    fun updateBrandById(id: Int, newBrand: Brand)
+
+    @PUT("/brands/{title}")
+    suspend fun updateBrand(@Path("title") title: String, @Body newBrand: Brand, @Header("Authorization") token: String)
 
     @POST("/brands/add")
     suspend fun addNewBrand(@Body brand: BrandDTO, @Header("Authorization") token: String)
@@ -55,12 +58,14 @@ interface OnlineShopApi {
 
     @DELETE("/categories/{title}")
     suspend fun deleteCategoryByTitle(@Path("title") title: String, @Header("Authorization") token: String)
-    fun updateCategoryById(id: Int, newBrand: Category)
+    @PUT("/categories/{title}")
+    suspend fun updateCategory(@Path("title") title: String, @Body newCategory: Category, @Header("Authorization") token: String)
 
     @POST("/categories/add")
     suspend fun addNewCategory(@Body brand: CategoryDTO, @Header("Authorization") token: String)
 
-    fun getImageByItemId(id: Int)
+    @GET("/images/{id}")
+    suspend fun getImageById(@Path("id") id: String, @Header("Authorization") token: String): MyImageDTO
     fun addNewImage(image: Image)
     fun deleteImageById(id: String)
     @POST("/signin")

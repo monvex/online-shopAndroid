@@ -26,12 +26,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.example.online_shop.domain.models.Category
 import com.example.online_shop.presentation.admin_panel.AdminPanelViewModel
 
 @Composable
 fun CategoriesAdminScreen(
     onNavigateToCategoryAdding: () -> Unit,
+    navController: NavController,
     viewModel: AdminPanelViewModel = hiltViewModel()
 ) {
     val categories by viewModel.categories.collectAsState()
@@ -45,7 +47,7 @@ fun CategoriesAdminScreen(
                 .fillMaxSize()
         ) {
             items(categories) { category ->
-                CategoryCard(category, viewModel)
+                CategoryCard(category, viewModel, navController)
             }
 
         }
@@ -64,7 +66,7 @@ fun CategoriesAdminScreen(
 }
 
 @Composable
-fun CategoryCard(category: Category, viewModel: AdminPanelViewModel){
+fun CategoryCard(category: Category, viewModel: AdminPanelViewModel, navController: NavController){
     Row( modifier = Modifier
         .fillMaxWidth()
         .padding(20.dp)
@@ -73,7 +75,7 @@ fun CategoryCard(category: Category, viewModel: AdminPanelViewModel){
             Text(text = category.categoryTitle, fontSize = 20.sp)
         }
         Column(){
-            Button(onClick = {  },
+            Button(onClick = { navController.navigate("categoryEdit/${category.categoryTitle}") },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
@@ -99,10 +101,4 @@ fun CategoryCard(category: Category, viewModel: AdminPanelViewModel){
         modifier = Modifier.fillMaxWidth(0.95f),
         color = Color.LightGray, thickness = 1.dp
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CategoriesAdminScreenPreview() {
-    CategoriesAdminScreen({})
 }

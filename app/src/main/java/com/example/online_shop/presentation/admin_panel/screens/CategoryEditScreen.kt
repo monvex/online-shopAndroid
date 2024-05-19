@@ -24,39 +24,26 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.online_shop.presentation.admin_panel.AdminPanelViewModel
 
 @Composable
-fun ItemAddingScreen(
+fun CategoryEditScreen(
+    categoryTitle: String,
     viewModel: AdminPanelViewModel = hiltViewModel()
 ){
-    var title by remember { mutableStateOf("") }
-    var brand by remember { mutableStateOf("") }
-    var category by remember { mutableStateOf("") }
+    var newTitle by remember { mutableStateOf("") }
     Box( modifier = Modifier
         .fillMaxSize()
         .padding(0.dp, 65.dp)){
         Column() {
             Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                Text("Введите название товара")
+                Text("Введите новое название категории")
             }
             Row( modifier = Modifier.fillMaxWidth().padding(5.dp), horizontalArrangement = Arrangement.Center ) {
-                OutlinedTextField(value = title, onValueChange = { title = it })
-            }
-            Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                Text("Введите название бренда")
-            }
-            Row( modifier = Modifier.fillMaxWidth().padding(5.dp), horizontalArrangement = Arrangement.Center ) {
-                OutlinedTextField(value = brand, onValueChange = { brand = it })
-            }
-            Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                Text("Введите название категории")
-            }
-            Row( modifier = Modifier.fillMaxWidth().padding(5.dp), horizontalArrangement = Arrangement.Center ) {
-                OutlinedTextField(value = category, onValueChange = { category = it })
+                OutlinedTextField(value = newTitle, onValueChange = { newTitle = it })
             }
             Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center ) {
                 Button(
                     onClick = {
-                        if (title.isNotEmpty()) {
-                            viewModel.addNewCategory(title)
+                        if (newTitle.isNotEmpty()) {
+                            viewModel.updateCategory(categoryTitle, newTitle)
                         }
                     },
                     colors = ButtonDefaults.buttonColors(

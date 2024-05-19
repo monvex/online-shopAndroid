@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.online_shop.domain.models.Brand
 import com.example.online_shop.domain.models.Category
 import com.example.online_shop.presentation.admin_panel.AdminPanelViewModel
@@ -31,6 +32,7 @@ import com.example.online_shop.presentation.admin_panel.AdminPanelViewModel
 @Composable
 fun BrandsAdminScreen(
     onNavigateToBrandAdding: () -> Unit,
+    navController: NavController,
     viewModel: AdminPanelViewModel = hiltViewModel()
 ) {
     val brands by viewModel.brands.collectAsState()
@@ -44,7 +46,7 @@ fun BrandsAdminScreen(
                 .fillMaxSize()
         ) {
             items(brands) { brand ->
-                BrandCard(brand, viewModel)
+                BrandCard(brand, viewModel, navController)
             }
         }
         Row( modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.Bottom ){
@@ -62,7 +64,7 @@ fun BrandsAdminScreen(
 }
 
 @Composable
-fun BrandCard(brand: Brand, viewModel: AdminPanelViewModel){
+fun BrandCard(brand: Brand, viewModel: AdminPanelViewModel, navController: NavController){
     Row( modifier = Modifier
         .fillMaxWidth()
         .padding(20.dp)
@@ -71,7 +73,7 @@ fun BrandCard(brand: Brand, viewModel: AdminPanelViewModel){
             Text(text = brand.brandTitle, fontSize = 20.sp)
         }
         Column(){
-            Button(onClick = {  },
+            Button(onClick = { navController.navigate("brandEdit/${brand.brandTitle}") },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
@@ -97,10 +99,4 @@ fun BrandCard(brand: Brand, viewModel: AdminPanelViewModel){
         modifier = Modifier.fillMaxWidth(0.95f),
         color = Color.LightGray, thickness = 1.dp
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BrandsAdminScreenPreview() {
-    CategoriesAdminScreen( {} )
 }

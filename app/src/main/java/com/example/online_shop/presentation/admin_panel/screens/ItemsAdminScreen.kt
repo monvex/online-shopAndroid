@@ -20,10 +20,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.online_shop.R
 import com.example.online_shop.domain.models.Brand
 import com.example.online_shop.domain.models.Item
 import com.example.online_shop.presentation.admin_panel.AdminPanelViewModel
@@ -67,6 +72,13 @@ fun ItemCard(item: Item, viewModel: AdminPanelViewModel){
         .fillMaxWidth()
         .padding(20.dp)
     ){
+        Column(modifier = Modifier.fillMaxWidth(0.25f)){
+            AsyncImage(model = ImageRequest.Builder(LocalContext.current)
+                .data("http://192.168.1.92:8080/images/${item.imageId}")
+                .crossfade(true)
+                .build(),
+                contentDescription = null)
+        }
         Column( modifier = Modifier.fillMaxWidth(0.25f) ){
             Text(text = item.itemTitle, fontSize = 20.sp)
         }

@@ -6,6 +6,7 @@ import com.example.online_shop.data.remote.responses.AuthResponse
 import com.example.online_shop.domain.models.Brand
 import com.example.online_shop.domain.models.Category
 import com.example.online_shop.domain.models.Item
+import com.example.online_shop.domain.models.MyImage
 import com.example.online_shop.domain.models.User
 import com.example.online_shop.domain.models.UserToDB
 import com.example.online_shop.utils.ApiResponse
@@ -28,16 +29,16 @@ interface OnlineShopRepository {
 
     suspend fun getBrands(token: String): List<Brand>
     suspend fun deleteBrandByTitle(title: String, token: String)
-    fun updateBrandById(id: Int, newBrand: Brand, token: String)
+    suspend fun updateBrand(title: String, newBrand: Brand, token: String)
     suspend fun addNewBrand(brand: Brand, token: String)
 
 
     suspend fun getCategories(token: String): List<Category>
     suspend fun deleteCategoryByTitle(title: String, token: String)
-    fun updateCategoryById(id: Int, newBrand: Category, token: String)
+    suspend fun updateCategory(title: String, newCategory: Category, token: String)
     suspend fun addNewCategory(category: Category, token: String)
 
-    fun getImageByItemId(id: Int, token: String)
+    suspend fun getImageById(id: String, token: String): MyImage
     fun addNewImage(image: Image, token: String)
     fun deleteImageById(id: String, token: String)
 

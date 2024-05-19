@@ -10,10 +10,12 @@ import com.example.online_shop.data.remote.responses.AuthResponse
 import com.example.online_shop.data.remote.toBrand
 import com.example.online_shop.data.remote.toCategory
 import com.example.online_shop.data.remote.toItem
+import com.example.online_shop.data.remote.toMyImage
 import com.example.online_shop.data.remote.toUser
 import com.example.online_shop.domain.models.Brand
 import com.example.online_shop.domain.models.Category
 import com.example.online_shop.domain.models.Item
+import com.example.online_shop.domain.models.MyImage
 import com.example.online_shop.domain.models.User
 import com.example.online_shop.domain.models.UserToDB
 import com.example.online_shop.domain.models.toBrandDTO
@@ -70,8 +72,8 @@ class OnlineShopRepositoryImpl @Inject constructor(
         api.deleteBrandByTitle(title, token = token)
     }
 
-    override fun updateBrandById(id: Int , newBrand: Brand , token: String) {
-        TODO("Not yet implemented")
+    override suspend fun updateBrand(title: String, newBrand: Brand, token: String) {
+        api.updateBrand(title, newBrand, token = token)
     }
 
     override suspend fun addNewBrand(brand: Brand , token: String) {
@@ -86,16 +88,16 @@ class OnlineShopRepositoryImpl @Inject constructor(
         api.deleteCategoryByTitle(title, token = token)
     }
 
-    override fun updateCategoryById(id: Int , newBrand: Category , token: String) {
-        TODO("Not yet implemented")
+    override suspend fun updateCategory(title: String, newCategory: Category , token: String) {
+        api.updateCategory(title, newCategory, token = token)
     }
 
     override suspend fun addNewCategory(category: Category , token: String) {
         api.addNewCategory(category.toCategoryDTO(), token = token)
     }
 
-    override fun getImageByItemId(id: Int , token: String) {
-        TODO("Not yet implemented")
+    override suspend fun getImageById(id: String, token: String): MyImage {
+        return api.getImageById(id, token = token).toMyImage()
     }
 
     override fun addNewImage(image: Image , token: String) {

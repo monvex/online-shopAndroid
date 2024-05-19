@@ -93,6 +93,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.0")
     implementation("androidx.compose.material:material")
 
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
     //ViewModel Compose
 
