@@ -49,6 +49,7 @@ private fun getTitleForRoute(route: String): String {
         "adminBrands" -> "Брэнды"
         "adminItems" -> "Товары"
         "signIn" -> "Авторизация"
+        "shopMain" -> "Aboba Store"
         else -> ""
     }
 }

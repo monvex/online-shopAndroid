@@ -46,15 +46,22 @@ class AdminPanelViewModel @Inject constructor(
     private val _token: String? = null
     var token = _token
 
+    val baseImageUrl: String = "http://192.168.0.104:8080/images/"
+
     init {
         runBlocking {
             token = tokenManager.getToken().first()
         }
         viewModelScope.launch {
             getCategories()
+        }
+        viewModelScope.launch {
             getBrands()
             getItems()
             getUsers()
+        }
+        viewModelScope.launch {
+            getItems()
         }
     }
 

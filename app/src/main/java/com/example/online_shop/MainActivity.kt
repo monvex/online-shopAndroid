@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,6 +35,9 @@ import com.example.online_shop.presentation.admin_panel.screens.UsersAdminScreen
 import com.example.online_shop.presentation.auth.AuthScreen
 import com.example.online_shop.presentation.auth.AuthScreenViewModel
 import com.example.online_shop.presentation.components.AppBar
+import com.example.online_shop.presentation.user_shop.main_screen.ShoppingCartScreen
+import com.example.online_shop.presentation.user_shop.main_screen.UserShopMainScreen
+import com.example.online_shop.presentation.user_shop.main_screen.UserShopMainScreenViewModel
 import com.example.online_shop.ui.theme.OnlineshopTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
@@ -66,8 +70,21 @@ class MainActivity : ComponentActivity() {
                                 if (viewModel.token == null) {
                                     navController.navigate("signIn")
                                 } else {
-                                    navController.navigate("adminMain")
+                                    navController.navigate("shopMain")
                                 }
+                            }
+                            composable("shopMain") {
+                                UserShopMainScreen(
+                                    onAdminPanelClicked = {navController.navigate("adminMain")},
+                                    onShoppingCartClicked = { navController.navigate("shoppingCart")}
+                                )
+                            }
+                            composable("shoppingCart") { backStackEntry ->
+                                val parentEntry  = remember(backStackEntry) {
+                                    navController.getBackStackEntry("shopMain")
+                                }
+                                val parentViewModel = hiltViewModel<UserShopMainScreenViewModel>(parentEntry)
+                                ShoppingCartScreen(viewModel = parentViewModel)
                             }
                             composable("adminMain") {
                                 val viewModel: AuthScreenViewModel = hiltViewModel()
@@ -101,7 +118,7 @@ class MainActivity : ComponentActivity() {
                                                         response.token,
                                                         Toast.LENGTH_SHORT
                                                     ).show()
-                                                    navController.navigate("adminMain")
+                                                    navController.navigate("shopMain")
                                                 } else {
                                                     Toast.makeText(
                                                         localContext,

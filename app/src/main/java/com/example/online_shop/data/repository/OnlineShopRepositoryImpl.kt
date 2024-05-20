@@ -2,8 +2,6 @@ package com.example.online_shop.data.repository
 
 import android.media.Image
 import com.example.online_shop.data.dataStore.TokenManager
-import com.example.online_shop.data.remote.CategoryDTO
-import com.example.online_shop.data.remote.ItemDTO
 import com.example.online_shop.data.remote.OnlineShopApi
 import com.example.online_shop.data.remote.requests.AuthRequest
 import com.example.online_shop.data.remote.responses.AuthResponse
@@ -20,8 +18,10 @@ import com.example.online_shop.domain.models.User
 import com.example.online_shop.domain.models.UserToDB
 import com.example.online_shop.domain.models.toBrandDTO
 import com.example.online_shop.domain.models.toCategoryDTO
-import com.example.online_shop.domain.models.toUserToDB
 import com.example.online_shop.domain.repository.OnlineShopRepository
+import com.google.gson.GsonBuilder
+import org.json.JSONArray
+import org.json.JSONStringer
 import javax.inject.Inject
 
 class OnlineShopRepositoryImpl @Inject constructor(
@@ -94,6 +94,10 @@ class OnlineShopRepositoryImpl @Inject constructor(
 
     override suspend fun addNewCategory(category: Category , token: String) {
         api.addNewCategory(category.toCategoryDTO(), token = token)
+    }
+
+    override suspend fun buyItemsFromShoppingCart(shoppingCart: MutableList<Item> , token: String): Double {
+        return api.buyItemsFromShoppingCart(shoppingCart, token)
     }
 
     override suspend fun getImageById(id: String, token: String): MyImage {

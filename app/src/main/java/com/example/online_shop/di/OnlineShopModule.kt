@@ -20,7 +20,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "data_store")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "data_store1")
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -38,7 +38,7 @@ object OnlineShopModule {
     @Singleton
     fun provideOnlineShopApi(): OnlineShopApi {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.92:8080/")
+            .baseUrl("http://192.168.0.105:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(OnlineShopApi::class.java)

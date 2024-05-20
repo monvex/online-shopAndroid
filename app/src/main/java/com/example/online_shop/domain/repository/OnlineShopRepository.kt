@@ -9,9 +9,6 @@ import com.example.online_shop.domain.models.Item
 import com.example.online_shop.domain.models.MyImage
 import com.example.online_shop.domain.models.User
 import com.example.online_shop.domain.models.UserToDB
-import com.example.online_shop.utils.ApiResponse
-import com.example.online_shop.utils.apiRequestFlow
-import kotlinx.coroutines.flow.Flow
 
 interface OnlineShopRepository {
     suspend fun getItems(token: String): List<Item>
@@ -38,6 +35,7 @@ interface OnlineShopRepository {
     suspend fun updateCategory(title: String, newCategory: Category, token: String)
     suspend fun addNewCategory(category: Category, token: String)
 
+    suspend fun buyItemsFromShoppingCart(shoppingCart: MutableList<Item>, token: String): Double
     suspend fun getImageById(id: String, token: String): MyImage
     fun addNewImage(image: Image, token: String)
     fun deleteImageById(id: String, token: String)

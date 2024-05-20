@@ -1,12 +1,14 @@
 package com.example.online_shop.data.remote
 
 import android.media.Image
+import com.example.online_shop.data.ShoppingCart
 import com.example.online_shop.data.remote.requests.AuthRequest
 import com.example.online_shop.data.remote.responses.AuthResponse
 import com.example.online_shop.domain.models.Brand
 import com.example.online_shop.domain.models.Category
 import com.example.online_shop.domain.models.Item
 import com.example.online_shop.domain.models.UserToDB
+import org.json.JSONArray
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -22,7 +24,8 @@ interface OnlineShopApi {
     suspend fun getItems(@Header("Authorization") token: String): List<ItemDTO>
     fun getPaginatedItems(page: Int, size: Int): List<Item>
     fun getItemById(id: Int): Item
-
+    @POST("/purchase")
+    suspend fun buyItemsFromShoppingCart(@Body items: List<Item>, @Header("Authorization") token: String): Double
     @DELETE("items/{id}")
     suspend fun deleteItemById(@Path("id") id : Int, @Header("Authorization") token: String)
     fun addNewItem(item: Item)
